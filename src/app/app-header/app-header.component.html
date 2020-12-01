@@ -1,0 +1,16 @@
+<div class="toolbar" role="banner">
+    <img
+      width="52"
+      alt="Company Logo"
+      src="../../assets/images/company-logo.png"
+    />
+    <span>User Repository</span>
+    <div class="logout-wrapper pull-right mr-20">
+        <span class="f14" *ngIf="isLoggedIn">{{loggedInEmail}}</span>
+        <span class="mt-20 glyphicon glyphicon-chevron-down ml-15" *ngIf="isLoggedIn && !enableLogoutFlag" (click)="enableLogoutFlag=true"></span>
+        <span class="mt-20 glyphicon glyphicon-chevron-up ml-15" *ngIf="isLoggedIn && enableLogoutFlag" (click)="enableLogoutFlag=!enableLogoutFlag"></span>
+    </div>
+  </div>
+  <div class="logout pull-right col-lg-2 mt-65 mr-20" *ngIf="enableLogoutFlag" (click)="logOut()">
+    <span class="logout-text pull-right">Logout</span>
+  </div>

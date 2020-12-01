@@ -1,0 +1,27 @@
+<app-header></app-header>
+<div class="col-lg-12 ml-25p mt-149">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="m0">Login</h3></div>
+            <div class="panel-body">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="input-box-wrapper">
+                        <span class="text-holder f20">Email Address:</span>
+                        <input type="text" [(ngModel)]="email" placeholder="Email Address" class="iblock mt-5" (keyup)="badEmail=false"/>
+                        <span class="error iblock mt-5" *ngIf="badEmail">Email Address is required!</span>
+                    </div>
+                    <div class="input-box-wrapper mt-10">
+                        <span class="text-holder f20">Password</span>
+                        <input type="password" [(ngModel)]="password" placeholder="Password" class="iblock mt-5" (keyup)="badPassword=false"/>
+                        <span class="error iblock mt-5" *ngIf="badPassword">Password is required!</span>
+                    </div>
+                    <div class="mt-15">
+                        <button type="submit" (click)="onSubmit()">Submit</button>
+                        <span class="mt-10 iblock">Do not have account? Register <a routerLink="/register" alt="Register Link">here</a></span>
+                        <span class="mt-10 iblock error" *ngIf="errorMessage">Login Failed! {{errorMessage}}</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+</div>

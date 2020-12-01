@@ -1,0 +1,81 @@
+<app-header></app-header>
+<div id="loader" *ngIf="isLoading"></div>
+<div class="mt-149 col-lg-8 col-md-8 col-sm-12 col-xs-12" *ngIf="!isLoading">
+    <div class="search-wrapper pull-left">
+        <input type="search" id="site-search" [(ngModel)]="searchedId"
+       aria-label="Search through site content" placeholder="Type id to search">
+
+        <button class="ml-5" (click)="searchById()">Search</button>
+        <button class="ml-5" (click)="goToPage(1)">Reset</button>
+    </div>
+    <button *ngIf="pageNum==2" class="pull-right" (click)="pageNum=1;goToPage(1)">Previous</button>
+    <button *ngIf="pageNum==1" class="pull-right" (click)="pageNum=2;goToPage(2)">Next</button>
+</div>
+<div class="table-responsive col-lg-8 col-md-8 col-sm-12 col-xs-12" *ngIf="!isLoading">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Avatar</th>
+          <th scope="col" (click)="sortingEnabledEmail = true;sort('email')">
+              Email
+              <span class="glyphicon glyphicon-arrow-up ml-5" *ngIf="isDesc && sortingEnabledEmail"></span>
+              <span class="glyphicon glyphicon-arrow-down ml-5" *ngIf="!isDesc && sortingEnabledEmail"></span>
+          </th>
+          <th scope="col" (click)="sortingEnabledFirstName = true;sort('first_name')">
+              FirstName
+              <span class="glyphicon glyphicon-arrow-up ml-5" *ngIf="isDesc && sortingEnabledFirstName"></span>
+              <span class="glyphicon glyphicon-arrow-down ml-5" *ngIf="!isDesc && sortingEnabledFirstName"></span>
+            </th>
+          <th scope="col" (click)="sortingEnabledLastName = true;sort('last_name')">
+              LastName
+              <span class="glyphicon glyphicon-arrow-up ml-5" *ngIf="isDesc && sortingEnabledLastName"></span>
+              <span class="glyphicon glyphicon-arrow-down ml-5" *ngIf="!isDesc && sortingEnabledLastName"></span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let user of userList | orderBy:sortingName:isDesc; let i= index">
+            <tr *ngIf="noResultFound">
+                <td colspan="5" class="text-center">
+                    <span>No Record Found!</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-edit" data-toggle="collapse" [attr.data-target]="'#user'+i"></span>
+                    <span class="glyphicon glyphicon-trash ml-5" (click)="deleteUser(user.id)"></span>
+                </td>
+                <td>
+                    <img [attr.src]="user.avatar" alt="user profile photo"/>
+                </td>
+                <td><span>{{user.email}}</span></td>
+                <td><span>{{user.first_name}}</span></td>
+                <td><span>{{user.last_name}}</span></td>
+            </tr>
+            <tr class="hide-table-padding">
+                <td colspan="5">
+                    <div id="collapseOne"  [attr.id]="'user'+i" class="collapse">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-box-wrapper">
+                                <span>FirstName:</span>
+                                <input [(ngModel)]="user.first_name" placeholder="First Name" />
+                                <span class="error iblock" *ngIf="badFirstName">Firstname should be alphabetic and must start with uppercase</span>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 input-box-wrapper">
+                                <span>LastName:</span>
+                                <input [(ngModel)]="user.last_name" placeholder="Last Name">
+                                <span class="error iblock" *ngIf="badLastName">Lastname should be alphabetic and must start with uppercase</span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <button type="submit" (click)="onSubmit(user.id, user.first_name, user.last_name)">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+         </ng-container>
+        
+      </tbody>
+    </table>
+  
